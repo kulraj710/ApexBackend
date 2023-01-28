@@ -1,21 +1,24 @@
 from pathlib import Path
-import environ
+from urllib.parse import urlparse
+# import environ
+import os
 
 # INitialise env vars
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = False
+ALLOWED_HOSTS = ['*']
+# DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['.vercel.app','.now.sh']
 
 
 # Application definition
@@ -98,15 +101,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'https://apex-children-hospital-karjan.web.app'
-    ]
+CSRF_TRUSTED_ORIGINS = ['*']
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:3000',
+#     'https://apex-children-hospital-karjan.web.app',
+#     'http://192.168.29.84:3000',
+#     'http://127.0.0.1:8000',
+#     'https://apex-server1.el.r.appspot.com'
+#     ]
 
 # cors
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://apex-children-hospital-karjan.web.app'
+    'https://apex-children-hospital-karjan.web.app',
+    'http://192.168.29.84:3000'
 ]
 
 
@@ -125,13 +133,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+# PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+# STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')

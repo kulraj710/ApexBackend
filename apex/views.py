@@ -22,10 +22,6 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def index(request):
-    # a = PatProfile.objects.all()
-    
-    # serializer_class = PatProfileSerializer(a, many=True)
-    # return JsonResponse(serializer_class.data, safe=False)
     return HttpResponse("Working... It is deployed! voila!")
         
     

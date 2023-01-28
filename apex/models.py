@@ -34,7 +34,7 @@ class OpdRecord(models.Model):
 
     class Meta:
         db_table = 'opd_record'
-        unique_together = ('ref_id', 'id')
+        unique_together = ('ref', 'id')
     
     # def __str__(self):
     #     return self.ref
