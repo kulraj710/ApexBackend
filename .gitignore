@@ -168,3 +168,6 @@ poetry.toml
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+
+app.yaml

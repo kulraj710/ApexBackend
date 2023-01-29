@@ -1,22 +1,34 @@
 from pathlib import Path
 from urllib.parse import urlparse
-# import environ
+import environ
 import os
 
 # INitialise env vars
-# env = environ.Env()
-# environ.Env.read_env()
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+
+APPENGINE_URL = env("APPENGINE_URL", default=None)
+if APPENGINE_URL:
+    # Ensure a scheme is present in the URL before it's processed.
+    if not urlparse(APPENGINE_URL).scheme:
+        APPENGINE_URL = f"https://{APPENGINE_URL}"
+
+    ALLOWED_HOSTS = [urlparse(APPENGINE_URL).netloc]
+    CSRF_TRUSTED_ORIGINS = [APPENGINE_URL]
+    SECURE_SSL_REDIRECT = True
+else:
+    ALLOWED_HOSTS = ["*"]
 # DEBUG = env('DEBUG')
 
 
@@ -71,14 +83,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': env('DATABASE_NAME'),
-    #     'USER': env('DATABASE_USER'), 
-    #     'PASSWORD': env('DATABASE_PASSWORD'),
-    #     'HOST': env('DATABASE_HOST'), 
-    #     'PORT': env('DATABASE_PORT'),
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'), 
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'), 
+        'PORT': env('DATABASE_PORT'),
+    }
 }
 
 
@@ -101,14 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = ['*']
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:3000',
-#     'https://apex-children-hospital-karjan.web.app',
-#     'http://192.168.29.84:3000',
-#     'http://127.0.0.1:8000',
-#     'https://apex-server1.el.r.appspot.com'
-#     ]
+# CSRF_TRUSTED_ORIGINS = ['*']
 
 # cors
 CORS_ALLOWED_ORIGINS = [

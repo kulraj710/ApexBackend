@@ -1,7 +1,11 @@
 runtime: python39
 entrypoint: gunicorn -b :$PORT backend.wsgi
-# instance_class: F2
 
 env_variables:
-  # APPENGINE_URL: 
   SECRET_KEY: JohCVIBcFWMurSNfVeDdLAIqIZtKdttyfXsOCMASjhDcFZbHhO
+  APPENGINE_URL: https://apex-server1.el.r.appspot.com
+  DATABASE_NAME: postgres
+  DATABASE_USER: postgres_apex
+  DATABASE_PASSWORD: LeomessiLM10
+  DATABASE_HOST: apex.ciud91esa8pg.ap-south-1.rds.amazonaws.com
+  DATABASE_PORT: 5432
